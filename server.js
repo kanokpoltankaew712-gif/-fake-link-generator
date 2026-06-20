@@ -10,12 +10,18 @@ const linkStore = new Map();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// 🔥 เพิ่ม Header เพื่อข้ามหน้าเตือน ngrok
+app.use((req, res, next) => {
+  res.setHeader('ngrok-skip-browser-warning', 'true');
+  next();
+});
+
 function generateToken() {
   return crypto.randomBytes(16).toString('hex');
 }
 
-// 🔥 แก้ไข URL นี้เป็น ngrok ของคุณ
-const NGROK_URL = 'https://your-ngrok-url.ngrok-free.dev';
+// 🔥 แก้ไข URL นี้เป็น ngrok ของคุณ (อย่าลงท้ายด้วย /)
+const NGROK_URL = 'https://tacking-democracy-cash.ngrok-free.dev';
 const ROUTE_NAME = 'file';
 
 function createFakeLink(realTargetUrl) {
